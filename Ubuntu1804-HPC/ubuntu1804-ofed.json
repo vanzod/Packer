@@ -30,7 +30,7 @@
     }],
     "provisioners": [
 	{
-	    "type": "file",
+        "type": "file",
         "source": "ubuntu-18.04-hpc",
         "destination": "/tmp"
 	},
@@ -44,7 +44,7 @@
            "/tmp/ubuntu-18.04-hpc/install_hpcdiag.sh",
            "/tmp/ubuntu-18.04-hpc/hpc-tuning.sh",
            "/tmp/ubuntu-18.04-hpc/network-tuning.sh",
-	       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+           "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
         ],
         "inline_shebang": "/bin/sh -x",
         "type": "shell",
