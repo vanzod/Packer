@@ -10,7 +10,7 @@ version='18.04.522200'
 gallery='dvgallery'
 sku='Standard_HB120rs_v2'
 
-logfile="./packer_$(date +%Y%m%d%H%M%S)"
+logfile="./packer_$(date +%Y%m%d%H%M%S).log"
 printf "\n>>> Saving log in file: %s\n\n" $logfile
 
 export PACKER_LOG=1
