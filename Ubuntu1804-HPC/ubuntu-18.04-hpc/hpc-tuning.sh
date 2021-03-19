@@ -4,7 +4,7 @@
 systemctl disable ufw
 
 # Disable cloud-init
-echo network: {config: disabled} | sudo tee /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+#echo network: {config: disabled} | sudo tee /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 sudo bash -c "cat > /etc/netplan/50-cloud-init.yaml" <<'EOF'
 network:
     ethernets:
