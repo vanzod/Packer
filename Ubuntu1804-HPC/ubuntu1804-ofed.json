@@ -10,7 +10,7 @@
         "image_publisher": "Canonical",
         "image_offer": "UbuntuServer",
         "image_sku": "18_04-lts-gen2",
-        "image_version": "18.04.202102240",
+        "image_version": "18.04.202101290",
 
         "managed_image_resource_group_name": "{{user `var_resource_group`}}",
         "managed_image_name": "{{user `var_imgdef`}}",
@@ -20,31 +20,32 @@
             "gallery_name": "{{user `var_gallery`}}",
             "image_name": "{{user `var_imgdef`}}",
             "image_version": "{{user `var_imgver`}}",
-            "replication_regions": ["SouthCentralUS"]
+            "replication_regions": ["{{user `var_replication_region`}}"]
         },
 
-        "vm_size": "Standard_HB120rs_v2",
-        "managed_image_storage_account_type": "Premium_LRS",
+        "vm_size": "{{user `var_build_sku`}}",
+        "managed_image_storage_account_type": "Standard_LRS",
         "ssh_pty": "true",
         "build_resource_group_name": "{{user `var_resource_group`}}"
     }],
     "provisioners": [
 	{
         "type": "file",
-        "source": "ubuntu-18.04-hpc",
+        "source": "scripts",
         "destination": "/tmp"
 	},
 	{
         "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
         "inline": [
-           "chmod +x /tmp/ubuntu-18.04-hpc/*.sh",
-           "/tmp/ubuntu-18.04-hpc/install_utils.sh",
-           "/tmp/ubuntu-18.04-hpc/install_mellanoxofed.sh",
-           "/tmp/ubuntu-18.04-hpc/install_hpcx.sh",
-           "/tmp/ubuntu-18.04-hpc/install_hpcdiag.sh",
-           "/tmp/ubuntu-18.04-hpc/hpc-tuning.sh",
-           "/tmp/ubuntu-18.04-hpc/network-tuning.sh",
-           "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+            "chmod +x /tmp/scripts/*.sh",
+            "/tmp/scripts/install_utils.sh",
+            "/tmp/scripts/install_mellanoxofed.sh",
+            "/tmp/scripts/install_hpcx.sh",
+            "/tmp/scripts/install_hpcdiag.sh",
+            "/tmp/scripts/hpc-tuning.sh",
+            "/tmp/scripts/network-tuning.sh",
+            "rm -rfv /tmp/scripts",
+            "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
         ],
         "inline_shebang": "/bin/sh -x",
         "type": "shell",
